@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  xsollaservice:
+    image: ${DOCKER_REGISTRY-}xsollaservice
+    build:
+      context: .
+      dockerfile: Dockerfile

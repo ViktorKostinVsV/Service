@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "n3sTqSgSNH3fiukwvMroKEOZy8IAq6u0pQ/lBGDN+oAJGTky5ZOOHrce/QDQ9/HvYw4A3EfgdkMUcmk0vyZzCA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\vsvvi\\source\\repos\\XsollaService\\XsollaService\\XsollaService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vsvvi\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
+  ],
+  "logs": []
+}

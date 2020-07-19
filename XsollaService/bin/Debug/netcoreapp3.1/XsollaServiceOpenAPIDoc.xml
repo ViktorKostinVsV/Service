@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XsollaService</name>
+    </assembly>
+    <members>
+        <member name="T:XsollaService.Controllers.AdminController">
+            <summary>
+            APIMethod, which returns the list of all payments for the transferred period
+            </summary>
+        </member>
+        <member name="M:XsollaService.Controllers.AdminController.#ctor(Microsoft.Extensions.Logging.ILogger{XsollaService.Controllers.AdminController})">
+            <summary>
+            AdminController Constructor
+            </summary>
+            <param name="logger">Type used to perform logging</param>
+        </member>
+        <member name="M:XsollaService.Controllers.AdminController.Get(System.String,System.String,System.DateTime,System.DateTime)">
+            <summary>
+            Method returns the list of all payments for the transferred period.
+            </summary>
+            <param name="password">Password</param>
+            <param name="login">Login</param>
+            <param name="Begin">From what time to make a search</param>
+            <param name="Last">Until what time to search</param>
+            <returns>Returns a line with selected payments </returns>
+        </member>
+        <member name="M:XsollaService.Controllers.AdminController.DeserializationDict(System.Runtime.Serialization.Formatters.Binary.BinaryFormatter,System.IO.FileStream)">
+            <summary>
+            The method deserializes the transmitted stream in Ditionary.
+            </summary>
+            <param name="bf">Class for serialization and deserialization of the object</param>
+            <param name="stream">Stream for storing all sessions</param>
+            <returns>Object Dictionary</returns>
+        </member>
+        <member name="M:XsollaService.Controllers.AdminController.ReturnList(System.Collections.Generic.Dictionary{System.String,XsollaService.Payment},System.DateTime,System.DateTime)">
+            <summary>
+            Method that selects all payments for the selected period 
+            </summary>
+            <param name="payments">Dictionary with all session ID</param>
+            <param name="Begin">From what time to make a search</param>
+            <param name="Last">Until what time to search</param>
+            <returns>Returns Key/Value pair with suitable payments</returns>
+        </member>
+        <member name="M:XsollaService.Controllers.AdminController.GetResult(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,XsollaService.Payment}})">
+            <summary>
+            Method returns a string with all elements in the passed dictionary
+            </summary>
+            <param name="list">Dictionary with string key and payment value</param>
+            <returns>Returns a line with all elements</returns>
+        </member>
+        <member name="T:XsollaService.Controllers.InitPaymentController">
+            <summary>
+            APIMethod that accepts the amount and purpose of payment 
+            and returns sessionId - payment session identifier
+            </summary>
+        </member>
+        <member name="M:XsollaService.Controllers.InitPaymentController.#ctor(Microsoft.Extensions.Logging.ILogger{XsollaService.Controllers.InitPaymentController})">
+            <summary>
+            InitPaymentController Constructor
+            </summary>
+            <param name="logger">Type used to perform logging</param>
+        </member>
+        <member name="M:XsollaService.Controllers.InitPaymentController.Get(System.Int32,System.String)">
+            <summary>
+            Method, accepts amount and purpose of payment 
+            and returns sessionId - payment session identifier
+            </summary>
+            <param name="sum">Payment amount</param>
+            <param name="obj">Purpose of payment</param>
+            <returns>Returns sessionId - payment session identifier</returns>
+        </member>
+        <member name="M:XsollaService.Controllers.InitPaymentController.DeserializationDict(System.Runtime.Serialization.Formatters.Binary.BinaryFormatter,System.IO.FileStream)">
+            <summary>
+            The method deserializes the transmitted stream in Ditionary.
+            </summary>
+            <param name="bf">Class for serialization and deserialization of the object</param>
+            <param name="stream">Stream for storing all sessions</param>
+            <returns>Object Dictionary</returns>
+        </member>
+        <member name="T:XsollaService.Controllers.LuhnController">
+            <summary>
+            APIMethod that accepts card data and sessionId.
+            The card number must be checked against the algorithm of the Luhn.
+            Valid numbers should simulate successful payment,
+            invalid numbers should return an error.
+            </summary>
+        </member>
+        <member name="M:XsollaService.Controllers.LuhnController.#ctor(Microsoft.Extensions.Logging.ILogger{XsollaService.Controllers.LuhnController})">
+            <summary>
+            LuhnController Constructor
+            </summary>
+            <param name="logger">Type used to perform logging</param>
+        </member>
+        <member name="M:XsollaService.Controllers.LuhnController.Get(System.String,System.Int32,System.DateTime,System.String)">
+            <summary>
+            Method that accepts card data and checks numbers for validity.
+            </summary>
+            <param name="number">The number of the card.</param>
+            <param name="CVV_CVC">CVV or CVC of the card.</param>
+            <param name="date">Date of registration of the card.</param>
+            <param name="sessionID">Session ID</param>
+            <returns>Returns the payment status </returns>
+        </member>
+        <member name="M:XsollaService.Controllers.LuhnController.DeserializationDict(System.Runtime.Serialization.Formatters.Binary.BinaryFormatter,System.IO.FileStream)">
+            <summary>
+            The method deserializes the transmitted stream in Ditionary.
+            </summary>
+            <param name="bf">Class for serialization and deserialization of the object</param>
+            <param name="stream">Stream for storing all sessions</param>
+            <returns>Object Dictionary</returns>
+        </member>
+        <member name="M:XsollaService.Controllers.LuhnController.CheckSessionID(System.Collections.Generic.Dictionary{System.String,XsollaService.Payment},System.String,System.DateTime@)">
+            <summary>
+            Method checks the validity of the session identifier.
+            </summary>
+            <param name="payments">Dictionary with all session ID</param>
+            <param name="sessionID">session ID</param>
+            <param name="paymentDate">Reference to date of found payment </param>
+            <returns>Returns true if the session ID exists, otherwise false</returns>
+        </member>
+        <member name="M:XsollaService.Controllers.LuhnController.CheckDate(System.DateTime,System.DateTime)">
+            <summary>
+            Method limits the life time of the payment session.
+            </summary>
+            <param name="nowDate">Current time</param>
+            <param name="paymentDate">session ID generation time</param>
+            <returns>Returns true if current time is 5 minutes longer 
+            than session ID creation time, otherwise false.</returns>
+        </member>
+        <member name="M:XsollaService.Controllers.LuhnController.CheckLuhn(System.String)">
+            <summary>
+            The method checks the validity of the map using the Luhn method.
+            </summary>
+            <param name="number">Card number</param>
+            <returns>Returns the boolean variable</returns>
+        </member>
+        <member name="T:XsollaService.Payment">
+            <summary>
+            Initializing purchasing session class
+            </summary>
+        </member>
+        <member name="P:XsollaService.Payment.sum">
+            <summary>
+            sum
+            </summary>
+        </member>
+        <member name="P:XsollaService.Payment.obj">
+            <summary>
+            purpose of payment
+            </summary>
+        </member>
+        <member name="P:XsollaService.Payment.sessionID">
+            <summary>
+            Session ID
+            </summary>
+        </member>
+        <member name="P:XsollaService.Payment.date">
+            <summary>
+            Date of payment creation 
+            </summary>
+        </member>
+        <member name="M:XsollaService.Payment.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Payment class constructor
+            </summary>
+            <param name="s">sum</param>
+            <param name="o">purpose of payment</param>
+            <param name="ID">Session ID</param>
+        </member>
+        <member name="M:XsollaService.Payment.#ctor(System.Int32,System.String,System.String,System.DateTime)">
+            <summary>
+            Payment class constructor
+            </summary>
+            <param name="s">sum</param>
+            <param name="o">purpose of payment</param>
+            <param name="ID">Session ID</param>
+            <param name="d">DateTime</param>
+        </member>
+    </members>
+</doc>
